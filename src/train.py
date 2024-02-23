@@ -44,6 +44,8 @@ data["loser_hand"].replace(map_hand, inplace=True)
 data["winner_hand"].replace(map_hand, inplace=True)
 data["tourney_level"].replace(map_tourney, inplace=True)
 
+data = np.log(data + 1)
+
 #División de datos y Train-test split
 X = data.drop("minutes", axis=1)
 y = data["minutes"]
@@ -51,7 +53,7 @@ y = data["minutes"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, train_size = 0.8, random_state = 42)
 
 #Entrenamiento del modelo
-rforest = RandomForestRegressor(bootstrap= True, max_depth= 80, max_features= 30, min_samples_leaf= 3, min_samples_split= 8, n_estimators= 1000)
+rforest = RandomForestRegressor(bootstrap= False, max_depth= 80, max_features= 15, min_samples_leaf= 3, min_samples_split= 8, n_estimators= 1000)
 rforest.fit(X_train, y_train)
 
 #Guardamos modelo
