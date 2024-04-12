@@ -3,3 +3,5 @@ statsmodels
 catboost
 streamlit
 xgboost
+joblib
+sklearn
