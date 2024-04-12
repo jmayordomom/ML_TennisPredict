@@ -11,7 +11,7 @@ st.subheader("Un modelo predictivo sobre el mundo del tenis 🎾")
 
 st.sidebar.info("Selecciona una de las páginas para navegar.")
 
-image = Image.open("img/tennis.jpeg")
+image = Image.open("src/prod/img/tennis.jpeg")
 st.image(image)
 
 st.write("### 🔗 Origen de los datos")
