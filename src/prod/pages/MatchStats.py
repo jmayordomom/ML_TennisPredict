@@ -21,7 +21,7 @@ for i in range(1, 101):
 
 progress_bar.empty()
 
-data = pd.read_csv("../data/raw/atp_matches_2023.csv", sep=";")
+data = pd.read_csv("src/data/raw/atp_matches_2023.csv", sep=";")
 # data = pd.read_csv("../data/processed/tennisResults.csv")
 
 torneos = sorted(data["tourney_name"].unique())
