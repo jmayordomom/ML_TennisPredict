@@ -1,5 +1,3 @@
-import pickle
-from statistics import LinearRegression
 from sklearn.calibration import LabelEncoder
 from sklearn.linear_model import ElasticNet, Lasso, Ridge
 from sklearn.model_selection import cross_validate, train_test_split
@@ -22,7 +20,7 @@ st.sidebar.header("ModelPrediction")
 st.write("#### Esta página muestra información relativa a la métrica a predecir, y a los modelos utilizados")
 
 #Carga datos
-data = pd.read_csv("../data/processed/tennisResults.csv")
+data = pd.read_csv("src/data/processed/tennisResults.csv")
 
 #Escalado
 columns_LE = ["tourney_name", "winner_ioc", "loser_ioc", "round"]
