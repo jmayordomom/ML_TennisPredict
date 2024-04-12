@@ -72,7 +72,7 @@ if uploaded_file is not None:
     dataframe["loser_hand"].replace(map_hand, inplace=True)
     dataframe["winner_hand"].replace(map_hand, inplace=True)
 
-    loaded_model = joblib.load( "../model/my_model.pkl")
+    loaded_model = joblib.load( "src/model/my_model.pkl")
         
     pred = loaded_model.predict(dataframe)
     dfPred = pd.DataFrame(pred, columns=["Predicción (en minutos)"])
