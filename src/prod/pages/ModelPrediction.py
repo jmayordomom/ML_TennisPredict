@@ -1,3 +1,6 @@
+
+import sklearn
+
 from sklearn.calibration import LabelEncoder
 from sklearn.linear_model import ElasticNet, Lasso, Ridge
 from sklearn.model_selection import cross_validate, train_test_split
@@ -9,7 +12,6 @@ from sklearn.svm import LinearSVR
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 
-import sklearn
 import streamlit as st
 import numpy as np
 import pandas as pd
