@@ -9,6 +9,7 @@ from sklearn.svm import LinearSVR
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 
+import sklearn
 import streamlit as st
 import numpy as np
 import pandas as pd
