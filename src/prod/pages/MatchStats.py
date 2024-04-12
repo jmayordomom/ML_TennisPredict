@@ -3,7 +3,7 @@ import time
 import numpy as np
 import pandas as pd
 
-st.set_page_config(page_title="MatchStats", page_icon="📈")
+st.set_page_config(page_title="Datos del partido", page_icon="📈")
 
 st.markdown("# MatchStats")
 st.sidebar.header("MatchStats")
@@ -132,6 +132,39 @@ with col3:
     if data["winner_hand"].iloc[0] == "R":
         hand = "Diestro"
     elif data["winner_hand"].iloc[0] == "L":
+        hand = "Zurdo"
+    else:
+        hand = "Ambidiestro"
+    st.write(hand)
+# column 4 - Count of cities
+with col4:
+    st.write('### Nº Aces Ganador')
+    ace = str(data["w_ace"].iloc[0]).split(".")[0]
+    st.write(ace)
+with col5:
+    st.write('### Nº DF Ganador')
+    df = str(data["w_df"].iloc[0]).split(".")[0]
+    st.write(df)
+    
+# Datos perdedor
+st.write('## Estadísticas del perdedor')
+
+col1, col2, col3, col4, col5 = st.columns(5)
+with col1:
+    st.write('### Perdedor')
+    loser = data["loser_name"].iloc[0] + " - " + data["loser_ioc"].iloc[0]
+    st.write(loser)
+
+with col2:
+    st.write('### Edad')
+    age = str(data["loser_age"].iloc[0]).split(".")[0]
+    st.write(age)
+    
+with col3:
+    st.write('### Mano dominante')
+    if data["loser_hand"].iloc[0] == "R":
+        hand = "Diestro"
+    elif data["loser_hand"].iloc[0] == "L":
         hand = "Zurdo"
     else:
         hand = "Ambidiestro"

@@ -1,16 +1,10 @@
 import joblib
-import numpy as np
-from sklearn.metrics import mean_absolute_percentage_error
+
 import streamlit as st
 import pandas as pd
 from io import StringIO
 
-
 from sklearn.calibration import LabelEncoder
-
-from sklearn.model_selection import cross_validate, train_test_split
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.ensemble import RandomForestRegressor
 
 st.set_page_config(page_title="Predictor", page_icon="📈")
 st.sidebar.header("Predict Yourself")
