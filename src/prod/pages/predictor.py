@@ -15,9 +15,39 @@ from sklearn.ensemble import RandomForestRegressor
 st.set_page_config(page_title="Predictor", page_icon="📈")
 st.sidebar.header("Predict Yourself")
 
-st.markdown("# ModelPrediction")
+st.markdown("# Mi Predicción")
 st.write("Esta página permite realizar una prediccion con datos propios")
+st.write("Hay que subir un fichero con formato **csv** y los siguientes campos:")
 
+options = [('winner_id','Identificador del jugador ganador','Un número entero'),
+           ('winner_hand','Mano predominante del ganador','R (diestro), L (zurdo) o U (ambidiestro)'), 
+           ('winner_age','Edad del ganador','Un número entero'), 
+           ('loser_id','Identificador del jugador perdedor','Un número entero'), 
+           ('loser_hand','Mano predominante del perdedor', 'R (diestro), L (zurdo) o U (ambidiestro)'),
+            ('loser_age','Edad del perdedor','Un número entero'), 
+            ('best_of','Número de sets a los que se juega el partido','El número 3 o el número 5'), 
+       ('round','Ronda del partido','F (Final), SF (Semifinal), QF (cuartos de final), R16 (Octavos), R32 (Tercera ronda), R64 (Segunda ronda), R128 (Primera ronda) o  RR (Round Robin)'), 
+       ('w_ace','Número de aces del ganador','Un número entero'), 
+       ('w_df','Número de dobles faltas del ganador','Un número entero'), 
+       ('w_svpt','Número de puntos ganados al servicio del ganador','Un número entero'), 
+       ('w_1stIn','Número de primeros saques metidos del ganador','Un número entero'),
+       ('w_1stWon','Puntos ganados con el primer servicio del ganador','Un número entero'), 
+       ('w_2ndWon','Puntos ganados con el segundo servicio del ganador','Un número entero'), 
+       ('w_SvGms','Juegos al servicio ganados por el ganador','Un número entero'), 
+       ('w_bpSaved','Número de Break Points salvados por el ganador','Un número entero'), 
+       ('w_bpFaced','Número de Break Points jugados por el ganador','Un número entero'), 
+       ('l_ace','Número de aces del perdedor','Un número entero'),
+       ('l_df','Número de dobles faltas del perdedor','Un número entero'), 
+       ('l_svpt','Número de puntos ganados al servicio del perdedor','Un número entero'), 
+       ('l_1stIn','Número de primeros saques metidos del perdedor','Un número entero'), 
+       ('l_1stWon','Puntos ganados con el primer servicio del perdedor','Un número entero'), 
+       ('l_2ndWon','Puntos ganados con el segundo servicio del perdedor','Un número entero'), 
+       ('l_SvGms','Juegos al servicio ganados por el perdedor','Un número entero'),
+       ('l_bpSaved','Número de Break Points salvados por el perdedor','Un número entero'), 
+       ('l_bpFaced','Número de Break Points jugados por el perdedor','Un número entero')]
+
+dfOptions = pd.DataFrame(options, columns=["Campo", "Descripción", "Tipo"])
+st.write(dfOptions)
 
 uploaded_file = st.file_uploader("Elige un fichero")
 if uploaded_file is not None:
@@ -33,51 +63,6 @@ if uploaded_file is not None:
     # Can be used wherever a "file-like" object is accepted:
     dataframe = pd.read_csv(uploaded_file, sep=";")
 
-    
-    #Lectura del fichero desde data/raw
-    # data = pd.read_csv("../data/raw/atp_matches_2023.csv", sep=";")
-
-    # #Eliminamos las columnas que nos nos interesan
-    # data.drop(columns=["tourney_id", "draw_size", "tourney_date", "match_num", "winner_name", "winner_seed", "loser_seed",
-    #                 "loser_name", "score", "winner_rank", "winner_rank_points","loser_rank", "loser_rank_points", "winner_entry", "loser_entry"], inplace=True)
-
-    # # Tratamiento de NaNs
-    # data.dropna(subset=['w_ace', 'w_df', 'w_svpt', 'w_1stIn', 'w_1stWon'], inplace=True)
-    # data["winner_ht"].fillna(data["winner_ht"].mean(), inplace=True)
-    # data["loser_ht"].fillna(data["loser_ht"].mean(), inplace=True)
-    # data["loser_age"].fillna(data["loser_age"].mean(), inplace=True)
-    # data["minutes"].fillna(data["minutes"].mean(), inplace=True)
-
-    # #Escalado de datos
-    # columns_LE = ["tourney_name", "winner_ioc", "loser_ioc", "round"]
-    # le = LabelEncoder()
-
-    # data["tourney_name"] = le.fit_transform(data["tourney_name"])
-    # data["winner_ioc"] = le.fit_transform(data["winner_ioc"])
-    # data["loser_ioc"] = le.fit_transform(data["loser_ioc"])
-    # data["round"] = le.fit_transform(data["round"])
-
-    # map_surface = {"Hard":0, "Clay": 1, "Grass":2}
-    # map_hand = {"R":0, "L": 1, "U":2}
-    # map_tourney = {"A":0, "M": 1, "G":2}
-
-    # data["surface"].replace(map_surface, inplace=True)
-    # data["loser_hand"].replace(map_hand, inplace=True)
-    # data["winner_hand"].replace(map_hand, inplace=True)
-    # data["tourney_level"].replace(map_tourney, inplace=True)
-
-    # data = np.log(data + 1)
-
-    # #División de datos y Train-test split
-    # X = data.drop(columns=["minutes", "tourney_name", "surface","tourney_level",'winner_ioc','loser_ioc','winner_ht','loser_ht'], axis=1)
-    # y = data["minutes"]
-
-    # X_train, X_test, y_train, y_test = train_test_split(X, y, train_size = 0.8, random_state = 42)
-
-    # #Entrenamiento del modelo
-    # rforest = RandomForestRegressor(bootstrap= False, max_depth= 80, max_features= 15, min_samples_leaf= 3, min_samples_split= 8, n_estimators= 500)
-    # rforest.fit(X_train, y_train)
-
     #Preparacion de datos entrada
     le = LabelEncoder()
     dataframe["round"] = le.fit_transform(dataframe["round"])
@@ -89,9 +74,6 @@ if uploaded_file is not None:
 
     loaded_model = joblib.load( "../model/my_model.pkl")
         
-    mape = loaded_model.predict(dataframe)
-    # pred = rforest.predict(dataframe)
-    # st.markdown(y_test.shape[0])
-    # st.markdown(pred.shape[0])
-    # mape = mean_absolute_percentage_error(y_test, pred)
-    st.markdown(mape)
+    pred = loaded_model.predict(dataframe)
+    dfPred = pd.DataFrame(pred, columns=["Predicción (en minutos)"])
+    st.write(dfPred.round())
